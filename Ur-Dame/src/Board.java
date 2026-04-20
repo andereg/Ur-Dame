@@ -20,7 +20,7 @@ public class Board {
 	}
 
 	private void setField(int x, int y, Field field) {
-		this.board[x][y] = field;
+		this.board[y][x] = field;
 		if (field.getType() == FieldType.White) {
 			this.PlayerWhite.addField(field);
 		} else if (field.getType() == FieldType.Black) {
@@ -29,7 +29,7 @@ public class Board {
 	}
 
 	public Field getField(int x, int y) {
-		return this.board[x][y];
+		return this.board[y][x];
 	}
 
 	public void changeTurn() {
@@ -45,18 +45,18 @@ public class Board {
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < width; j++) {
 				if (i < middleHeight) {
-					this.setField(i, j, new Field(FieldType.Black));
+					this.setField(j, i, new Field(FieldType.Black, i , j));
 				} else if (i == middleHeight) {
 					if (j < middleWidth) {
-						this.setField(i, j, new Field(FieldType.Black));
+						this.setField(j, i, new Field(FieldType.Black, i , j));
 					} else if (j == middleWidth) {
-						this.setField(i, j, new Field(FieldType.Empty));
+						this.setField(j, i, new Field(FieldType.Empty, i , j));
 					} else {
-						this.setField(i, j, new Field(FieldType.White));
+						this.setField(j, i, new Field(FieldType.White, i , j));
 					}
 				}
 				else  {
-					this.setField(i, j, new Field(FieldType.White));
+					this.setField(j, i, new Field(FieldType.White, i , j));
 				}
 			}
 		}

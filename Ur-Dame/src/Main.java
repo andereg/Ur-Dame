@@ -38,13 +38,14 @@ public class Main {
 				continue;
 			}
 
-			var target = selectedPieceInput.split(",");
+			var target = targetInput.split(",");
 			var fieldTo = board.getField(Integer.parseInt(target[0]), Integer.parseInt(target[1]));
 
 
 			if (currentPlayer.move(fieldFrom, fieldTo)) {
 				System.out.println("Move successful.");
 
+				System.out.println(board);
 				board.changeTurn();
 			} else {
 				System.out.println("Move failed, please try again.");
