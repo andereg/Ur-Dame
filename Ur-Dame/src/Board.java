@@ -16,6 +16,9 @@ public class Board {
 	    this.PlayerWhite.setOpponent(this.PlayerBlack);
 	    this.PlayerBlack.setOpponent(this.PlayerWhite);
 
+		this.PlayerWhite.setBoard(this);
+		this.PlayerBlack.setBoard(this);
+
 		generateBoard(height, width);
 	}
 
@@ -29,7 +32,10 @@ public class Board {
 	}
 
 	public Field getField(int x, int y) {
-		return this.board[y][x];
+		if (x < 0 || x >= this.board[0].length || y < 0 || y >= this.board.length) {
+			return null;
+		}
+		return this.board[x][y];
 	}
 
 	public void changeTurn() {

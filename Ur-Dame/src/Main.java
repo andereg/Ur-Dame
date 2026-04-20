@@ -27,7 +27,7 @@ public class Main {
 			}
 
 			var selectedPiece = selectedPieceInput.split(",");
-			var fieldFrom = board.getField(Integer.parseInt(selectedPiece[0]), Integer.parseInt(selectedPiece[1]));
+			var fieldFrom = board.getField(Integer.parseInt(selectedPiece[1]), Integer.parseInt(selectedPiece[0]));
 
 			System.out.println(currentPlayer.getName() + "Select a target (format: x,y):");
 
@@ -39,7 +39,7 @@ public class Main {
 			}
 
 			var target = targetInput.split(",");
-			var fieldTo = board.getField(Integer.parseInt(target[0]), Integer.parseInt(target[1]));
+			var fieldTo = board.getField(Integer.parseInt(target[1]), Integer.parseInt(target[0]));
 
 
 			if (currentPlayer.move(fieldFrom, fieldTo)) {

@@ -12,10 +12,16 @@ public class Player {
 
 	private List<Field> fields;
 
+	private Board board;
+
 	public Player(String name, boolean isWhite) {
 		this.name = name;
 		this.isWhite = isWhite;
 		fields = new ArrayList<>();
+	}
+
+	public void setBoard(Board board) {
+		this.board = board;
 	}
 
 	public void addField(Field field) {
@@ -46,19 +52,34 @@ public class Player {
 
 	// Returns true if the move was successful, false otherwise
 	public boolean move(Field fieldFrom, Field fieldTo) {
+		var differenceY = fieldFrom.getY() - fieldTo.getY();
+		var differenceX = fieldFrom.getX() - fieldTo.getX();
+
+		// Can only move one step in any direction
+		if (differenceX < -1 || differenceX > 1 || differenceY < -1 || differenceX > 1) return false;
+
 		if (fieldTo.getType() == FieldType.Empty) {
-
-			var differenceY = fieldFrom.getY() - fieldTo.getY();
-			var differenceX = fieldFrom.getX() - fieldTo.getX();
-
-			// Can only move one step in any direction
-			if (differenceX < -1 || differenceX > 1 || differenceY < -1 || differenceX > 1) return false;
-
 			fieldTo.setType(fieldFrom.getType());
 			fieldFrom.setType(FieldType.Empty);
 
 			return true;
 		}
+
+		FieldType enemyFieldType = isWhite ? FieldType.Black : FieldType.White;
+
+		if (fieldTo.getType() == enemyFieldType) {
+			var fieldBehind = board.getField(fieldTo.getX() - differenceX, fieldTo.getY() - differenceY);
+			if (fieldBehind != null && fieldBehind.getType() == FieldType.Empty) {
+				// Empty field behind enemy piece
+				fieldTo.setType(fieldFrom.getType());
+				fieldFrom.setType(FieldType.Empty);
+
+				return true;
+			}
+
+		}
+
+
 
 		return false;
 	}
