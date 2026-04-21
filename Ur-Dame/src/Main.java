@@ -17,6 +17,12 @@ public class Main {
 		while (!board.isGameFinished()) {
 			Player currentPlayer = board.isWhiteTurn() ? playerWhite : playerBlack;
 
+			if (board.checkIfCurrentPlayerIsGameOver()) {
+				System.out.println(currentPlayer.getOpponent().getName() + " wins!");
+				board.setGameFinished(true);
+				break;
+			}
+
 			System.out.println(currentPlayer.getName() + "'s turn.");
 			System.out.println(currentPlayer.getName() + "Select a piece to move (format: x,y):");
 

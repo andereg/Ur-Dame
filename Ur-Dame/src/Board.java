@@ -88,6 +88,45 @@ public class Board {
 		return gameFinished;
 	}
 
+	public void setGameFinished(boolean gameFinished) {
+		this.gameFinished = gameFinished;
+	}
+
+	public boolean checkIfCurrentPlayerIsGameOver(){
+		var selectedFieldType = isWhiteTurn ? FieldType.White : FieldType.Black;
+
+		for (int i = 0; i < this.board.length; i++) {
+			for (int j = 0; j < this.board[i].length; j++) {
+				if (this.board[i][j].getType() == selectedFieldType) {
+					var field = this.board[i][j];
+
+					for (int x = -1; x <= 1; x++) {
+						for (int y = -1; y <= 1; y++) {
+							if (x == 0 && y == 0) {
+								continue;
+							}
+							var targetField = getField(field.getX() + x, field.getY() + y);
+							if (targetField != null){
+								if (targetField.getType() == FieldType.Empty) {
+									// There is an empty field
+									return false;
+								} else if (targetField.getType() != selectedFieldType) {
+									var fieldBehind = getField(targetField.getX() + x, targetField.getY() + y);
+									if (fieldBehind != null && fieldBehind.getType() == FieldType.Empty) {
+										// There is an enemy piece that can be jumped over
+										return false;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		return true;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
