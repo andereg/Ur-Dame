@@ -7,7 +7,8 @@ public class Main {
 		var playerWhite = new Player("Player White", true);
 		var playerBlack = new Player("Player Black", false);
 
-		var board = new Board(5,5 , playerWhite, playerBlack);
+		int dimension = 3;
+		var board = new Board(dimension,dimension , playerWhite, playerBlack);
 
 		System.out.println(board);
 

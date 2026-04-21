@@ -48,16 +48,28 @@ public class Board {
 		var middleHeight = height / 2;
 		var middleWidth = width / 2;
 
+		boolean twoEmptyFields = height % 2 == 0 || width % 2 == 0;
+
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < width; j++) {
 				if (i < middleHeight) {
-					this.setField(j, i, new Field(FieldType.Black, i , j));
-				} else if (i == middleHeight) {
+					if (twoEmptyFields && i == middleHeight - 1 && j == middleWidth - 1) {
+						this.setField(j, i, new Field(FieldType.Empty, i , j));
+					} else this.setField(j, i, new Field(FieldType.Black, i , j));
+				} else if (i == middleHeight && !twoEmptyFields) {
 					if (j < middleWidth) {
 						this.setField(j, i, new Field(FieldType.Black, i , j));
 					} else if (j == middleWidth) {
 						this.setField(j, i, new Field(FieldType.Empty, i , j));
 					} else {
+						this.setField(j, i, new Field(FieldType.White, i , j));
+					}
+				}
+				else if (twoEmptyFields){
+					if (i == middleHeight && j == middleWidth ) {
+						this.setField(j, i, new Field(FieldType.Empty, i , j));
+					}
+					else {
 						this.setField(j, i, new Field(FieldType.White, i , j));
 					}
 				}

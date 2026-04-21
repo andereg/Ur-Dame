@@ -56,7 +56,9 @@ public class Player {
 		var differenceX = fieldFrom.getX() - fieldTo.getX();
 
 		// Can only move one step in any direction
-		if (differenceX < -1 || differenceX > 1 || differenceY < -1 || differenceX > 1) return false;
+		if (!(differenceX == -1 || differenceX == 1) || !(differenceY == -1 || differenceY == 1)) {
+			return false;
+		}
 
 		if (fieldTo.getType() == FieldType.Empty) {
 			fieldTo.setType(fieldFrom.getType());
@@ -71,15 +73,17 @@ public class Player {
 			var fieldBehind = board.getField(fieldTo.getX() - differenceX, fieldTo.getY() - differenceY);
 			if (fieldBehind != null && fieldBehind.getType() == FieldType.Empty) {
 				// Empty field behind enemy piece
-				fieldTo.setType(fieldFrom.getType());
+
+				//Destroy enemy piece
+				fieldTo.setType(FieldType.Empty);
+
 				fieldFrom.setType(FieldType.Empty);
 
+				// Move piece to field behind
+				fieldBehind.setType(fieldFrom.getType());
 				return true;
 			}
-
 		}
-
-
 
 		return false;
 	}
